@@ -259,8 +259,13 @@ public class BackgroundModeExt extends CordovaPlugin {
     }
 
      private void checkTopPermissions(CallbackContext callback) {
-       int granted = ContextCompat.checkSelfPermission(getApp().getApplicationContext(), "MANAGE_OVERLAY_PERMISSION");
-       PluginResult res = new PluginResult(Status.OK, granted == PackageManager.PERMISSION_GRANTED);
+       Boolean granted = false;
+       if (SDK_INT >= M) {
+         granted = Settings.canDrawOverlays(getApp());
+       } else {
+         granted = true;
+       }
+       PluginResult res = new PluginResult(Status.OK, granted);
        callback.sendPluginResult(res);
      }
 
