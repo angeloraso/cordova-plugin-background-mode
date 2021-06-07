@@ -257,7 +257,7 @@ exports.moveToForeground = function()
  *
  * @return [ Boolean ]
  */
-exports.checkForegroundPermissions = function(fn) {
+exports.checkForegroundPermission = function(fn) {
     if (this._isAndroid) {
         cordova.exec(fn, null, 'BackgroundModeExt', 'checkTopPermissions', []);
     }
