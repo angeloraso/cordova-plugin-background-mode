@@ -37,6 +37,8 @@ import android.os.PowerManager;
 import android.provider.Settings;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -110,6 +112,9 @@ public class BackgroundModeExt extends CordovaPlugin {
             case "foreground":
                 moveToForeground();
                 break;
+            case "checkTopPermissions":
+              checkTopPermissions(callback);
+              break;
             case "requestTopPermissions":
                 requestTopPermissions();
                 break;
@@ -252,6 +257,12 @@ public class BackgroundModeExt extends CordovaPlugin {
 
         callback.sendPluginResult(res);
     }
+
+     private void checkTopPermissions(CallbackContext callback) {
+       int granted = ContextCompat.checkSelfPermission(getApp().getApplicationContext(), Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+       PluginResult res = new PluginResult(Status.OK, granted == PackageManager.PERMISSION_GRANTED);
+       callback.sendPluginResult(res);
+     }
 
      private void requestTopPermissions() {
         if (SDK_INT >= M) {

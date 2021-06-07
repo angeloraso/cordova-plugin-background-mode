@@ -253,6 +253,17 @@ exports.moveToForeground = function()
 };
 
 /**
+ * Check if permission to "draw on top" is granted. This permission is necessary for the "moveToForeground" method in Android 10+
+ *
+ * @return [ Boolean ]
+ */
+exports.checkForegroundPermissions = function(fn) {
+    if (this._isAndroid) {
+        cordova.exec(fn, null, 'BackgroundModeExt', 'checkTopPermissions', []);
+    }
+};
+
+/**
  * Requests permission to "draw on top" which is necessary for the "moveToForeground" method in Android 10+
  *
  * @return [ Void ]
