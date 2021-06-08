@@ -271,12 +271,7 @@ public class BackgroundModeExt extends CordovaPlugin {
 
      private void requestTopPermissions() {
         if (SDK_INT >= M) {
-
             Activity activity = cordova.getActivity();
-            if (Settings.canDrawOverlays(activity.getApplicationContext())) {
-                return;
-            }
-
             String pkgName    = activity.getPackageName();
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + pkgName));
             activity.startActivity(intent);
